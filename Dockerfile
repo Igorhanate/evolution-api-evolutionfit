@@ -1,4 +1,4 @@
-FROM atendai/evolution-api:v2.3.7
+FROM atendai/evolution-api:v2.2.3
 
 # Render injeta $PORT dinamicamente; Evolution API usa SERVER_PORT
 # DATABASE_URL é o que o Prisma precisa; aceitamos DATABASE_CONNECTION_URI também
