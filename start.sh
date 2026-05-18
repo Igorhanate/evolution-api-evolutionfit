@@ -2,16 +2,16 @@
 set -e
 
 export SERVER_PORT=${PORT:-8080}
+export DATABASE_URL=${DATABASE_CONNECTION_URI:-$DATABASE_URL}
 
-# Usa schema 'evolution' para isolar tabelas do Prisma das tabelas Alembic (public)
-BASE_URL=${DATABASE_CONNECTION_URI:-$DATABASE_URL}
-export DATABASE_URL="${BASE_URL}?schema=evolution"
+echo "==> Iniciando _prisma_migrations (evita P3005)..."
+node /init-db.js
 
 echo "==> Preparando migrations..."
 rm -rf ./prisma/migrations
 cp -r ./prisma/postgresql-migrations ./prisma/migrations
 
-echo "==> Aplicando migrations no schema 'evolution'..."
+echo "==> Aplicando migrations..."
 npx prisma migrate deploy --schema ./prisma/postgresql-schema.prisma
 
 echo "==> Iniciando Evolution API..."
